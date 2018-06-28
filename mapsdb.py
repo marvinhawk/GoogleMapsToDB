@@ -1,5 +1,5 @@
 #
-# 1.2. Google Maps to Database
+# 1.2.1 Google Maps to Database
 # Input: KML file
 # Output: Name and coordinates of locations in CSV file with or without headers
 #
@@ -55,8 +55,8 @@ def searchFile(text):
 
 		coordinates = result[1].strip().split(',')
 
-		location.latitude = coordinates[0]
-		location.longitude = coordinates[1]
+		location.longitude = coordinates[0]
+		location.latitude = coordinates[1]
 		
 		locations.append(location)
 		
