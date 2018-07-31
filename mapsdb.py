@@ -1,6 +1,6 @@
 #! usr/bin/env python3
 #
-# 1.2.1 Google Maps to Database
+# Google Maps to Database
 # Input: KML file
 # Output: Name and coordinates of locations in CSV file with or without headers
 #
@@ -15,7 +15,9 @@ def openFile():
 		if filename.lower().endswith('.kml'):
 			try:
 				infile = open(filename)
-				return (infile, filename)
+				f = infile.read()
+				infile.close()
+				return (f, filename)
 			except IOError:
 				print("Couldn't open {}".format(filename))
 		else:
@@ -52,6 +54,7 @@ def searchFile(text):
 
 		location = Location()
 
+		# Handling potential meta data in input
 		if result[0].startswith('<![CDATA['):
 			name = result[0][len('<![CDATA['):].rstrip(']]>')
 		else:
@@ -84,6 +87,7 @@ def printFile(loc, name):
 		print('Include headers?')
 		headers = input()
 		if headers == 'yes' or headers == 'y':
+			# Output can be customised here and in for loop below
 			writer.writerow(('ID', 'Name', 'Latitude', 'Longitude', 'Comments'))
 
 	for location in loc:
@@ -96,9 +100,7 @@ def printFile(loc, name):
 	f.close()
 	print("CSV file created")
 
-infile, filename = openFile()
-
-fileStr = infile.read()
+fileStr, filename = openFile()
 
 places = searchFile(fileStr)
 
